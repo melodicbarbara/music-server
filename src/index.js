@@ -1,8 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const multer = require('multer');
-const path = require('path');
-const dotenv = require('dotenv')
+import pool from "./config/db.js"
+import express from "express";
+import cors from "cors";
+import multer from "multer";
+import path from "path";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -19,6 +20,13 @@ app.use(cors());
 
 // Error handling  middleware
 
+// Testing POSTGRES Connection
+app.get("/", async (req, res) => {
+    console.log("Start");
+    const result = await pool.query("SELECT current_database()");
+    console.log("end");
+    res.send(`The database name is : ${result.rows[0].current_database}`)
+})
 
 // Set up file storage  
 const storage = multer.diskStorage({
