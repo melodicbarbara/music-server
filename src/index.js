@@ -5,6 +5,10 @@ import multer from "multer";
 import path from "path";
 import dotenv from "dotenv";
 
+import userRoutes from "./routes/userRoutes.js";
+import errorHandling from "./middlewares/errorHandler.js";
+import createUserTable from "./data/createUserTable.js";
+
 dotenv.config();
 
 const app = express();
@@ -16,9 +20,13 @@ app.use(cors());
 
 
 // Routes
-
+app.use("/api", userRoutes)
 
 // Error handling  middleware
+app.use(errorHandling);
+
+// Create table before starting server
+createUserTable();
 
 // Testing POSTGRES Connection
 app.get("/", async (req, res) => {
