@@ -2,5 +2,13 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    craeted_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT NOW()
+)
+
+CREATE TABLE IF NOT EXISTS music (
+    id SERIAL PRIMARY KEY,
+    content BINARY NOT NULL,
+    orchestra UNIQUE NOT NULL,
+    concerts VAR(100),
+    created_at TIMESTAMP DEFAULT NOW()
 )

@@ -6,8 +6,10 @@ import path from "path";
 import dotenv from "dotenv";
 
 import userRoutes from "./routes/userRoutes.js";
+import musicRoutes from "./routes/musicRoutes.js";
 import errorHandling from "./middlewares/errorHandler.js";
 import createUserTable from "./data/createUserTable.js";
+import createMusicTable from "./data/createMusicTable.js";
 
 dotenv.config();
 
@@ -20,13 +22,15 @@ app.use(cors());
 
 
 // Routes
-app.use("/api", userRoutes)
+app.use("/api", userRoutes);
+app.use("/musicapi", musicRoutes);
 
 // Error handling  middleware
 app.use(errorHandling);
 
 // Create table before starting server
 createUserTable();
+createMusicTable();
 
 // Testing POSTGRES Connection
 app.get("/", async (req, res) => {

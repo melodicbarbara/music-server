@@ -6,14 +6,14 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/userController.js";
-import validateUser from "../middlewares/ inputvalidator.js";
+import validateUser from "../middlewares/inputValidator.js";
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post("/user", validateUser, createUser);
-router.get("/users", getAllUsers);
-router.get("/user/:id", getUserById);
-router.put("/user/:id", validateUser, updateUser);
-router.delete("/user/:id", deleteUser);
+userRouter.post("/user", validateUser, createUser);
+userRouter.get("/users", getAllUsers); 
+userRouter.get("/user/:id", getUserById);
+userRouter.put("/user/:id", validateUser, updateUser);
+userRouter.delete("/user/:id", deleteUser);
 
-export default router;
+export default userRouter;
