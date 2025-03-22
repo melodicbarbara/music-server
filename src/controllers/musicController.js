@@ -10,31 +10,46 @@ const handleResponse = ( res, status, message, data=null) => {
     })
 }
 
-export const createMusic = async ( req, res, next)=> {
+export const createMusic = async (req, res, next) => {
     try {
-        if (!req.file) {
+        console.log('Request file details:', {
+            exists: !!req.file,
+            fieldname: req.file?.fieldname,
+            mimetype: req.file?.mimetype,
+            size: req.file?.size
+        });
+
+        if (!req.file || !req.file.buffer) {
             return res.status(400).json({
                 status: 400,
-                message: "No file uploaded"
+                message: "Valid file content is required"
             });
         }
-        
+
         const musicData = {
-            ...req.body,
-            content: req.file.buffer // Add file buffer as content
+            title: req.body.title,
+            orchestra: req.body.orchestra,
+            concerts: req.body.concerts || '',
+            content: req.file.buffer
         };
-        
+
+        console.log('Processing music data:', {
+            ...musicData,
+            content: `Buffer of size: ${req.file.buffer.length}`
+        });
+
         const result = await createMusicService(musicData);
-        res.status(201).json({
+        
+        return res.status(201).json({
             status: 201,
             message: "Music created successfully",
             data: result
         });
     } catch (error) {
-        console.error("Error in createMusic:", error);
-        res.status(500).json({
+        console.error('Error in createMusic:', error);
+        return res.status(500).json({
             status: 500,
-            message: "Internal server error"
+            message: error.message || "Internal server error"
         });
     }
 }

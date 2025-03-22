@@ -3,7 +3,8 @@ import Joi from "joi";
 const musicScheme = Joi.object({
     orchestra: Joi.string().min(3).required(),
     concerts: Joi.string(),
-    title: Joi.string().min(3).required()
+    title: Joi.string().min(3).required(),
+    content: Joi.binary()
 });
 
 const validateMusic = (req, res, next) => {
